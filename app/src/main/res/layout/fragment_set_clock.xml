@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#FFFFFF"
+    tools:context=".SetClockFragment">
+
+    <TextView
+        android:id="@+id/clockDisplay"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:text="00:30"
+        android:padding="16dp"
+        android:textSize="60sp"
+        android:fontFamily="monospace"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_centerInParent="true" />
+
+    <Button
+        android:id="@+id/set_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/clockDisplay"
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:text="Set"
+        android:width="120dp"
+        android:height="80dp"
+        android:textSize="24sp"
+        android:padding="8dp"
+        android:fontFamily="monospace"
+        android:layout_centerHorizontal="true">
+    </Button>
+
+</RelativeLayout>
