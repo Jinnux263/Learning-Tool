@@ -16,12 +16,16 @@ var hour : Int = 0
 var second :Int = 0
 var timer : CountDownTimer? = null
 
-val KEY_HOUR = "hour"
-val KEY_MINUTE = "minute"
+const val KEY_HOUR = "hour"
+const val KEY_MINUTE = "minute"
+
+
 
 class RunCountDownTimer : Fragment() {
     lateinit var binding : FragmentCountDownTimerBinding
     lateinit var DataBase : DataBaseHandler
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,8 +61,8 @@ class RunCountDownTimer : Fragment() {
         }
     }
 
-    fun clockRun(){
-        val totalTime : Long = (hour.toLong() * 3600 + minute.toLong() * 60) * 1000
+    private fun clockRun() {
+        val totalTime: Long = (hour.toLong() * 3600 + minute.toLong() * 60) * 1000
         var item = DataBase.getLast()
         if (item != null) {
             item.time = item.time?.plus(totalTime)
@@ -66,24 +70,50 @@ class RunCountDownTimer : Fragment() {
             item = Item(totalTime)
         }
 
-        timer = object: CountDownTimer(totalTime, 1000) {
+        timer = createTimer(totalTime)
+        timer!!.start()
+        var pause = false
+
+        binding.playBtn.setOnClickListener {
+            if (pause){
+                timer!!.start()
+            }
+        }
+
+        binding.pauseBtn.setOnClickListener {
+            if (timer != null) {
+                timer!!.cancel()
+                pause = true
+            }
+        }
+
+        binding.stopBtn.setOnClickListener {
+            if (timer != null) {
+                timer!!.cancel()
+                timer = null
+            }
+            hour = 0
+            minute = 0
+            binding.clockDisplay.text = "00:00:00"
+        }
+    }
+
+    private fun createTimer (totalTime : Long) : CountDownTimer {
+
+        timer = object : CountDownTimer(totalTime, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 convertTime(millisUntilFinished)
-                binding.clockDisplay.text = String.format(Locale.getDefault(), "%02d:%02d:%02d", hour, minute, second)
+                binding.clockDisplay.text =
+                    String.format(Locale.getDefault(), "%02d:%02d:%02d", hour, minute, second)
             }
 
             override fun onFinish() {
-                if (DataBase.isEmpty()) {
-                    DataBase.updateItem(0, item)
-                } else {
-                    DataBase.insertData(item)
-                }
-                val list = DataBase.readData()
-                convertTime(item.time!!)
-                binding.clockDisplay.text = String.format(Locale.getDefault(), "%02d:%02d:%02d", hour, minute, second)
+                binding.clockDisplay.text =
+                    String.format(Locale.getDefault(), "%02d:%02d:%02d", hour, minute, second)
             }
         }
-        timer!!.start()
+
+        return timer!!
     }
 
     fun convertTime(millisUntilFinished : Long){

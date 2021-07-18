@@ -11,7 +11,7 @@
         android:id="@+id/clockDisplay"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:text="00:30"
+        android:text="00:25"
         android:padding="16dp"
         android:textSize="60sp"
         android:fontFamily="monospace"

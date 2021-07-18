@@ -9,10 +9,11 @@ import androidx.fragment.app.Fragment
 import com.example.learningtool.databinding.FragmentSetClockBinding
 import java.util.*
 
+val INTERVAL = 5
+
 
 class SetClockFragment : Fragment() {
-
-    var minute : Int = 30
+    var minute : Int = 25
     var hour : Int = 0
     lateinit var binding : FragmentSetClockBinding
     //lateinit var DataBase : DataBaseHandler
@@ -22,14 +23,6 @@ class SetClockFragment : Fragment() {
     ): View {
 
         binding = FragmentSetClockBinding.inflate(layoutInflater)
-
-        /**
-         * DataBase = DataBaseHandler(context)
-        val list = DataBase.readData()
-        hour = list[0].time?.toInt() ?: 0
-        binding.clockDisplay.text = String.format(Locale.getDefault(), "%02d:%02d:%02d", hour, minute, second)
-         */
-        
         return binding.root
     }
 
@@ -61,7 +54,7 @@ class SetClockFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         hour = 0
-        minute = 30
+        minute = 25
     }
 
     fun popTimePicker() {
